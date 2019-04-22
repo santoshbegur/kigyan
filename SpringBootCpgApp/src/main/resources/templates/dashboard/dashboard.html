@@ -1,0 +1,269 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="images/kigyan.png">
+<title>Dashboard for Kigyan</title>
+
+<!-- ============================================================ -->
+<!-- Bootstrap core JavaScript -->
+<!-- ============================================================ -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="js/timedimension.js"></script>
+<script src="js/transum.js"></script>
+<script src="js/popper.min.js"></script>
+<!-- Graphs -->
+<script src="js/Chart.min.js"></script>
+<!-- Icons -->
+<script src="js/feather.min.js"></script>
+<!-- custom js -->
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+<script type="text/javascript" src="js/jquery.simplePagination.js"></script>
+<script type="text/javascript">
+	jQuery(function($) {
+		var items = $("#prediction_master_table tbody tr");
+		var numItems = items.length;
+		var allPages = numItems;
+		var perPage = 100;
+
+		// Only show the first 15 (or first `per_page`) items initially.
+		items.slice(perPage).hide();
+
+		// Now setup the pagination using the `#pagination` div.
+		$("#pagination").pagination({
+			items : numItems,
+			itemsOnPage : perPage,
+			cssStyle : "light-theme",
+
+			// This is the actual page changing functionality.
+			onPageClick : function(pageNumber) {
+				// We need to show and hide `tr`s appropriately.
+				var showFrom = perPage * (pageNumber - 1);
+				var showTo = showFrom + perPage;
+
+				// We'll first hide everything...
+				items.hide()
+				// ... and then only show the appropriate rows.
+				.slice(showFrom, showTo).show();
+			}
+		});
+	});
+</script>
+<!-- ============================================================ -->
+<!-- Bootstrap core CSS -->
+<!-- ============================================================ -->
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.19/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/buttons.dataTables.min.css">
+<!-- Custom styles for this template -->
+<link href="css/dashboard.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="css/simplePagination.css" />
+</head>
+
+<body>
+	<nav style="background-color: #53b439;"
+		class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+		<a class="navbar-brand col-sm-3 col-md-2 mr-0"
+			style="background-color: #53b439;" href="dashboard">Assortment AI</a>
+		<!-- 		<input class="form-control bg-light form-control-dark w-100" type="text"  -->
+		<!-- 				placeholder="Search" aria-label="Search"> -->
+		<div>
+			<a href="/dashboard"><h2 class="h2" style="color: white;">Dashboard</h2></a>
+		</div>
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap"><a class="nav-link"
+				style="color: white;" href="#">Logout</a></li>
+		</ul>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link active"
+							href="/dashboard"> <span data-feather="home"></span>
+								Dashboard <span class="sr-only">(current)</span>
+						</a></li>
+					</ul>
+				</div>
+			</nav>
+
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+			<div
+				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+
+				<form action="#" th:action="@{/search}" method="post">
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<div>
+							<label class="badge badge-primary lb-sm">StoreID:</label> <select
+								title="Please select store id"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="storeid" name="storeid">
+								<option>StoreID</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+							</select> <label class="badge badge-primary lb-sm">ProductID:</label> <select
+								title="Please select store id"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="productid" name="productid">
+								<option>ProductID</option>
+								<option>100037</option>
+								<option>100038</option>
+								<option>100003</option>
+								<option>100104</option>
+							</select> <label class="badge badge-primary lb-sm">Year:</label> <select
+								title="Please select the year"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="years" name="years">
+								<option>Year</option>
+								<option>2017</option>
+								<option>2018</option>
+								<option>2019</option>
+								<option>2020</option>
+							</select> <label class="badge badge-primary lb-sm">Quarter:</label> <select
+								title="Please select the quarter"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="quarter" name="quarter">
+								<option>Quarter</option>
+								<option>Quarter 1</option>
+								<option>Quarter 2</option>
+								<option>Quarter 3</option>
+								<option>Quarter 4</option>
+							</select> <label class="badge badge-primary lb-sm">Period:</label> <select
+								title="Please select the period"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="period" name="period">
+								<option>Period</option>
+								<option>Period 1</option>
+								<option>Period 2</option>
+								<option>Period 3</option>
+								<option>Period 4</option>
+								<option>Period 5</option>
+								<option>Period 6</option>
+								<option>Period 7</option>
+								<option>Period 8</option>
+								<option>Period 9</option>
+								<option>Period 10</option>
+								<option>Period 11</option>
+								<option>Period 12</option>
+							</select> <label class="badge badge-primary lb-sm">Week:</label> <select
+								title="Please select the week"
+								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
+								id="week" name="week">
+								<option>Week</option>
+							</select> <input class="btn btn-primary" type="submit" value="Search" />
+						</div>
+					</div>
+					<div id="selectError" class="text-danger"
+						th:text="${selectCriteriaError}"></div>
+				</form>
+			</div>
+
+			<table style="width: 100%">
+				<tr>
+					<th>
+						<div>
+							<canvas title="Line Chart" class="my-4" id="line" width="500"
+								height="220"></canvas>
+						</div>
+					</th>
+					<th>
+						<div>
+							<canvas title="Bar Chart" class="my-4" id="bar" width="500"
+								height="220"></canvas>
+						</div>
+					</th>
+				</tr>
+			</table>
+			<hr>
+			<table class="display">
+				<thead>
+					<tr>
+						<th style="width: 90%">
+							<div>
+								<h1>Prediction Master Table</h1>
+							</div>
+						</th>
+						<th style="width: 10px">
+							<div class="btn-group mr-2 align-items-center">
+								<button class="btn btn-sm btn-outline-secondary"
+									onclick="fnPrintReport('prediction_master_table')">Print</button>
+							</div>
+						</th>
+						<th style="width: 10px">
+							<div class="btn-group mr-2 align-items-center">
+								<button class="btn pull-right btn-sm btn-outline-secondary"
+									onclick="fnExportExcelReport('prediction_master_table');">Export</button>
+							</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="table-responsive">
+				<div id="pagination"></div>
+				<table id="prediction_master_table" border="1"
+					class="table-striped table-bordered display compact"
+					style="width: 100%">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<!-- 							<th>S_Week_ID</th> -->
+							<th>Week_ID</th>
+							<th>Store_ID</th>
+							<th>Store_Name</th>
+							<th>Prod_ID</th>
+							<th>Prod_Name</th>
+							<th>Predicted_Qty</th>
+							<!-- 							<th>Actual_Qty</th> -->
+							<th>Planned_Qty</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="store : ${predictionMasterList}">
+							<td th:text="${store.Id}"></td>
+							<!-- 							<td th:text="${store.sWeekId}"></td> -->
+
+							<td th:text="${store.weekId}"></td>
+							<td th:text="${store.storeId}"></td>
+
+							<td th:text="${store.storeName}"></td>
+							<td th:text="${store.l3Id}"></td>
+
+							<td th:text="${store.prodName}"></td>
+							<td th:text="${store.predQty}"></td>
+
+							<!-- 							<td th:text="${store.actualQty}"></td> -->
+							<td th:text="${store.plannedQty}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<br> <br>
+			</div>
+			</main>
+		</div>
+	</div>
+	<script>
+		feather.replace();
+		drawChartUsingTableRecords('line', 'prediction_master_table');
+		drawChartUsingTableRecords('bar', 'prediction_master_table');
+		setTimeout(function() {
+			$('#selectError').fadeOut('fast');
+		}, 10000); // <-- time in milliseconds
+	</script>
+</body>
+</html>

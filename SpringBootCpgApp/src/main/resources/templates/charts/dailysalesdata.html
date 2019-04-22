@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Column Chart for Kigyan</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="images/kigyan.png">
+
+<!-- Scripts -->
+<script>
+
+	window.onload = function() {
+		response.header("Access-Control-Allow-Origin", "*");
+		response.header("Access-Control-Allow-Headers", "X-Requested-With");
+		var dataPoints = [];
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled : true,
+			theme : "light2",
+			title : {
+				text : "Daily Sales Data"
+			},
+			axisY : {
+				title : "Units",
+				titleFontSize : 24
+			},
+			data : [ {
+				type : "column",
+				yValueFormatString : "#,### Units",
+				dataPoints : dataPoints
+			} ]
+		});
+
+		function addData(data) {
+			for (var i = 0; i < data.length; i++) {
+				dataPoints.push({
+					x : new Date(data[i].date),
+					y : data[i].units
+				});
+			}
+			chart.render();
+		}
+		$.getJSON("https://canvasjs.com/data/gallery/javascript/daily-sales-data.json", addData);
+
+		$.getJSON("https://canvasjs.com/data/gallery/javascript/daily-sales-data.json", function(addData) {
+			alert("*******Success*********");
+			var response = JSON.stringify(addData);
+			alert("success=" + response);
+			document.getElementById("employeeDetails").value = response;
+		});
+
+	}
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

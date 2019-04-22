@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Time Dimension Data tables</title>
+
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="js/timedimension.js"></script>
+
+</head>
+
+<body>
+	<h1>Time Dimension Table</h1>
+	<table id="timedimensiontable" class="display compact">
+
+		<!-- Header Table -->
+		<thead>
+			<tr>
+				<th>WeekId</th>
+				<th>DbDate</th>
+				<th>Year</th>
+				<th>Quarter</th>
+				<th>Period</th>
+				<th>Month</th>
+				<th>Week</th>
+				<th>MonthName</th>
+				<th>Day</th>
+				<th>DayName</th>
+				<th>Id</th>
+			</tr>
+		</thead>
+
+		<!-- Footer Table -->
+		<tfoot>
+			<tr>
+				<th>weekId</th>
+				<th>dbDate</th>
+				<th>year</th>
+				<th>quarter</th>
+				<th>period</th>
+				<th>month</th>
+				<th>week</th>
+				<th>monthName</th>
+				<th>day</th>
+				<th>dayName</th>
+				<th>id</th>
+			</tr>
+		</tfoot>
+	</table>
+
+</body>
+</html>
