@@ -1,4 +1,10 @@
 function drawChart(chartType) {
+	if(chartType==='line1'){
+		chartType='line'
+	}
+	if(chartType==='bar1'){
+		chartType='bar'
+	}
 	var ctx = document.getElementById(chartType);
 	var myChart = new Chart(ctx, {
 		type : chartType,
@@ -28,8 +34,16 @@ function drawChart(chartType) {
 		}
 	});
 }
-
+function LineChart(chartType){
+	
+}
 function drawTrendChart(chartType) {
+	if(chartType==='line1'){
+		chartType='line'
+	}
+	if(chartType==='bar1'){
+		chartType='bar'
+	}
 	var d1 = new Date(2017, 10, 15);
 	var options = {
 		animationEnabled : true,
@@ -228,6 +242,9 @@ function drawChartUsingTableRecords(chartType, id) {
 	});
 	var myChart = new Chart(ctx, {
 		type : chartType,
+		title:{
+			text: chartType + " Chart"
+		},
 		data : {
 			labels : week_id,
 			datasets : [ {
@@ -240,15 +257,21 @@ function drawChartUsingTableRecords(chartType, id) {
 			} ]
 		},
 		options : {
-			scales : {
-				yAxes : [ {
-					ticks : {
-						beginAtZero : false
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'WeekID'
 					}
-				} ]
-			},
-			legend : {
-				display : false,
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: true,
+						labelString: 'Predicted Qty'
+					}
+				}]
 			}
 		}
 	});
@@ -326,14 +349,15 @@ function fnChangeQuarter(parentId, childId, arrayName) {
 	});
 };
 
-function pagination() {
+function pagination(id) {
 	jQuery(function($) {
-		var items = $("#transumtable1 tbody tr");
-
+//		var items = $("#prediction_master_table tbody tr");
+		var items = $('#' + id + 'tbody tr');
 		var numItems = items.length;
-		var perPage = 10;
+		var allPages = numItems;
+		var perPage = 100;
 
-		// Only show the first 2 (or first `per_page`) items initially.
+		// Only show the first 15 (or first `per_page`) items initially.
 		items.slice(perPage).hide();
 
 		// Now setup the pagination using the `#pagination` div.

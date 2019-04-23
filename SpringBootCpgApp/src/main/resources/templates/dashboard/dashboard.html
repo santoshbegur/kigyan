@@ -23,42 +23,14 @@
 <script src="js/popper.min.js"></script>
 <!-- Graphs -->
 <script src="js/Chart.min.js"></script>
+<!-- <script src="js/utils.js"></script> -->
 <!-- Icons -->
 <script src="js/feather.min.js"></script>
 <!-- custom js -->
 <script src="js/app.js"></script>
 <script src="js/dashboard.js"></script>
 <script type="text/javascript" src="js/jquery.simplePagination.js"></script>
-<script type="text/javascript">
-	jQuery(function($) {
-		var items = $("#prediction_master_table tbody tr");
-		var numItems = items.length;
-		var allPages = numItems;
-		var perPage = 100;
 
-		// Only show the first 15 (or first `per_page`) items initially.
-		items.slice(perPage).hide();
-
-		// Now setup the pagination using the `#pagination` div.
-		$("#pagination").pagination({
-			items : numItems,
-			itemsOnPage : perPage,
-			cssStyle : "light-theme",
-
-			// This is the actual page changing functionality.
-			onPageClick : function(pageNumber) {
-				// We need to show and hide `tr`s appropriately.
-				var showFrom = perPage * (pageNumber - 1);
-				var showTo = showFrom + perPage;
-
-				// We'll first hide everything...
-				items.hide()
-				// ... and then only show the appropriate rows.
-				.slice(showFrom, showTo).show();
-			}
-		});
-	});
-</script>
 <!-- ============================================================ -->
 <!-- Bootstrap core CSS -->
 <!-- ============================================================ -->
@@ -118,7 +90,7 @@
 								<option>3</option>
 								<option>4</option>
 							</select> <label class="badge badge-primary lb-sm">ProductID:</label> <select
-								title="Please select store id"
+								title="Please select product id"
 								class="btn btn-sm btn-outline-secondary dropdown-toggle tooltips"
 								id="productid" name="productid">
 								<option>ProductID</option>
@@ -174,7 +146,7 @@
 				</form>
 			</div>
 
-			<table style="width: 100%">
+			<table id="line_bar_chart" style="width: 100%">
 				<tr>
 					<th>
 						<div>
@@ -258,6 +230,7 @@
 		</div>
 	</div>
 	<script>
+		pagination('prediction_master_table')
 		feather.replace();
 		drawChartUsingTableRecords('line', 'prediction_master_table');
 		drawChartUsingTableRecords('bar', 'prediction_master_table');
